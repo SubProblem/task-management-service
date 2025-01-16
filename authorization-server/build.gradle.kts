@@ -15,6 +15,8 @@ java {
     }
 }
 
+extra["springCloudVersion"] = "2024.0.0"
+
 repositories {
     mavenCentral()
     mavenLocal()
@@ -36,7 +38,14 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("org.subproblem:common:1.0-SNAPSHOT")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 kotlin {

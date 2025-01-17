@@ -1,0 +1,27 @@
+eureka:
+  instance:
+    preferIpAddress: false
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8060
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      routes:
+        - id: authorization-server
+          uri: lb://authorization-server
+          predicates:
+            - Path=/oauth2/**
+
+        - id: authorization-server
+          uri: lb://authorization-server
+          predicates:
+            - Path=/api/v1/**

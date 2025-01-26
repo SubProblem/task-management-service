@@ -18,4 +18,11 @@ object Constant {
             const val TWO_FACTOR_AUTH_TOPIC = "two-factor-auth-topic"
         }
     }
+
+    object HtmlTemplateNames {
+        object NameConstants {
+            const val REGISTRATION_CONFIRMATION_TEMPLATE = "RegistrationConfirmation"
+            const val TWO_FACTOR_AUTHENTICATION_TEMPLATE = "TwoFactorAuthentication"
+        }
+    }
 }

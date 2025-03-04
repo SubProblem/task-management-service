@@ -1,6 +1,5 @@
 package com.subproblem.authorizationserver.config
 
-import com.subproblem.authorizationserver.repository.UserRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
@@ -27,9 +26,7 @@ import java.util.*
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig(
-    private val userRepository: UserRepository
-) {
+class SecurityConfig {
 
     @Bean
     @Order(1)
@@ -82,13 +79,13 @@ class SecurityConfig(
             .clientAuthenticationMethod(CLIENT_SECRET_BASIC)
             .authorizationGrantType(AUTHORIZATION_CODE)
             .authorizationGrantType(REFRESH_TOKEN)
-            .redirectUri("https://github.com/SubProblem")
+            .redirectUri("http://127.0.0.1:8080/login/oauth2/code/spring")
             .postLogoutRedirectUri("http://127.0.0.1:8080/")
             .scope(OPENID)
             .scope(PROFILE)
             .clientSettings(
                 ClientSettings.builder()
-                    .requireProofKey(true)
+                    .requireProofKey(false)
                     .build()
             )
             .build()

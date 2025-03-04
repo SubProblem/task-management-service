@@ -2,32 +2,26 @@ package com.subproblem.apigateway.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository
-import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
+import org.springframework.security.config.web.server.ServerHttpSecurity
+import org.springframework.security.oauth2.client.web.server.WebSessionOAuth2ServerAuthorizationRequestRepository
+import org.springframework.security.web.server.SecurityWebFilterChain
 
 @Configuration
-@EnableWebSecurity
+@EnableWebFluxSecurity
 class SecurityConfig {
 
     @Bean
-    fun springSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
-
-        http
+    fun securityWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
+        return http
             .csrf { it.disable() }
-            .authorizeHttpRequests {
-                it.anyRequest().authenticated()
-            }
+            .authorizeExchange { it.anyExchange().authenticated() }
             .oauth2Login { customizer ->
-                customizer.authorizationEndpoint { authorization ->
-                    authorization.authorizationRequestRepository(
-                        HttpSessionOAuth2AuthorizationRequestRepository()
-                    )
-                }
+                customizer.authorizationRequestRepository(
+                    WebSessionOAuth2ServerAuthorizationRequestRepository()
+                )
             }
             .oauth2Client { }
-
-        return http.build()
+            .build()
     }
 }

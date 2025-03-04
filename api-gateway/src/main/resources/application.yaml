@@ -14,14 +14,25 @@ spring:
   cloud:
     discovery:
       enabled: true
-    gateway:
-      routes:
-        - id: authorization-server
-          uri: lb://authorization-server
-          predicates:
-            - Path=/oauth2/**
+  security:
+    oauth2:
+      client:
+        registration:
+          spring:
+            provider: spring
+            client-id: oidc-client
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_basic
+            redirect-uri: "http://127.0.0.1:8060/login/oauth2/code/spring"
+            scope: openid, profile
+        provider:
+          spring:
+            authorization-uri: http://localhost:9000/oauth2/authorize
+            issuer-uri: http://localhost:9000
+            token-uri: http://localhost:9000/oauth2/token
 
-        - id: authorization-server
-          uri: lb://authorization-server
-          predicates:
-            - Path=/api/v1/**
+  data:
+    redis:
+      host: localhost
+      port: 6379

@@ -1,0 +1,5 @@
+package com.subproblem.apigateway.config
+
+import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer
+
+class RedisSessionInitializer : AbstractHttpSessionApplicationInitializer(RedisConfig::class.java)

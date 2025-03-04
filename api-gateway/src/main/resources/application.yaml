@@ -31,3 +31,8 @@ spring:
             authorization-uri: http://localhost:9000/oauth2/authorize
             issuer-uri: http://localhost:9000
             token-uri: http://localhost:9000/oauth2/token
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
